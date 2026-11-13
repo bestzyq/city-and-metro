@@ -8,6 +8,7 @@
 //   6. 重新编码输出
 'use strict';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { seaRings, extractOldLand } from './sea.mjs';
 
 // ============================================================
 // 投影参数
@@ -51,6 +52,54 @@ function enc(pts) {
 
 function encRing(pts, isOuter) {
   return (isOuter ? 'o' : 'i') + enc(pts);
+}
+
+// 海域要素（名字见 data_sh 的 seaName）：旧写法只有「覆盖旧地图的矩形 + 陆地洞 + 岛屿洞」，新条带没有陆地/海面范围，
+// 北面长江口会被算成陆地、南面海岸线也会偏北。这里按网格重新拼装一次，与 shdata/fix_sea_polygon.mjs 同一套逻辑。
+const SEA_NAME = '长江口';
+function rebuildSea(rows, names, geo, coast) {
+  const idx = rows.findIndex(function (row) { return typeof row[1] !== 'number' && names[row[0]] === SEA_NAME; });
+  if (idx < 0) return rows;
+  const row = rows[idx], rings = [];
+  for (let k = 1; k < row.length; k++) rings.push({ tag: row[k][0], pts: row[k].slice(1) });
+  const old = coast ? null : extractOldLand(rings);
+  if (!old && !coast) { console.log('  rebuildSea: 未识别出旧陆地洞，跳过（%d 环）', rings.length); return rows; }
+  const out = seaRings({
+    W: NEW_W, H: NEW_H, geo: geo, coast: coast,
+    landRings: old ? [old.land] : [], islandRings: old ? old.islands : [],
+  });
+  rows[idx] = [row[0]].concat(out.map(function (r) { return r.tag + enc(r.pts); }));
+  console.log('  rebuildSea: 海域 %d 环 → %d 环（%s）', rings.length, out.length, coast ? 'OSM 海岸线' : '按地物反推岸线');
+  return rows;
+}
+
+// 校验：海域多边形沿用旧写法「覆盖旧地图的矩形 + 陆地洞 + 岛屿洞」，靠奇偶规则表达「海 = 矩形减陆地」。
+// 2026-11 扩容时这里被改成覆盖新网格的矩形、陆地洞却仍停在旧范围，奇偶结果反转，整片市中心被算成水面。
+// 构建后用几个确定的陆地点做奇偶判定，异常时直接中断，避免再把整张图的地面画成水。
+const LAND_SAMPLES = [
+  ['人民广场', 31.2304, 121.4737],
+  ['徐家汇', 31.1951, 121.4370],
+  ['陆家嘴', 31.2397, 121.4998],
+  ['五角场', 31.2989, 121.5140],
+];
+
+function assertLandSamples(water, names) {
+  for (const [label, lat, lon] of LAND_SAMPLES) {
+    const [px, py] = project(lat, lon);
+    for (const row of water) {
+      if (typeof row[1] === 'number') continue;   // 水系线不参与面判定
+      let cross = 0;
+      for (let k = 1; k < row.length; k++) {
+        const p = dec(row[k], 1), n = p.length / 2;
+        for (let i = 0, j = n - 1; i < n; j = i++) {
+          const x0 = p[2 * j], y0 = p[2 * j + 1], x1 = p[2 * i], y1 = p[2 * i + 1];
+          if ((y0 > py) !== (y1 > py) && px < (x1 - x0) * (py - y0) / (y1 - y0) + x0) cross++;
+        }
+      }
+      if (cross % 2 === 1) throw new Error(`构建结果异常：${label} (${px.toFixed(1)}, ${py.toFixed(1)}) 落在水面要素「${names[row[0]] || '(未命名)'}」内`);
+    }
+  }
+  console.log(`  校验通过：${LAND_SAMPLES.length} 个陆地采样点都不在水面内`);
 }
 
 // 平移坐标数组
@@ -356,6 +405,9 @@ function main() {
   const allPlaces = [...shiftedPlaces, ...new_.newPlaces];
   const allAdmin = [...shiftedAdmin, ...new_.newAdmin];
   const allReserves = shiftedReserves;
+  const coastWays = existsSync('shdata/coastline.json') ? JSON.parse(readFileSync('shdata/coastline.json', 'utf8')).ways : null;
+  rebuildSea(allWater, names.names, { roads: allRoads, rail: allRail, parks: allParks, woods: allWoods, streets: shiftedStreets }, coastWays);
+  assertLandSamples(allWater, names.names);
 
   // 6. 生成输出
   const geo = {

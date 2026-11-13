@@ -79,7 +79,15 @@
     // 虹桥机场照常运营：用地不开发，范围内只能地下设站与地下穿越（同台北松山机场的规则）
     airport: { name: '虹桥机场', closeYear: 9999, buildable: 'underground', runway: [llW(31.2131, 121.3355), llW(31.1826, 121.3371)] },   // v2.2：跑道按 OSM 坐标（原数据走向偏斜）
     // 虹桥机场第二跑道（v2.2，OSM 坐标）：在原跑道以西约 365 m，2010 年 3 月启用（史实）
-    runways: [{ a: llW(31.1834, 121.3332), b: llW(31.2130, 121.3316), from: 2010.2 }],
+    runways: [
+      { a: llW(31.1834, 121.3332), b: llW(31.2130, 121.3316), from: 2010.2 },
+      // v2.9 东扩：浦东国际机场四条跑道（取自 OSM aeroway=runway，1999 年启用）
+      { a: [200.8, 154.3], b: [205.7, 169.4], from: 1999.7 },
+      { a: [199.8, 157.1], b: [204.0, 170.0], from: 2005.3 },
+      { a: [210.6, 155.3], b: [215.3, 169.7], from: 1999.7 },
+      { a: [212.3, 154.7], b: [216.9, 169.1], from: 2008.3 },
+      { a: [220.9, 158.6], b: [225.1, 171.5], from: 2015.7 },
+    ],
     regions: [
       { id: 'airport', name: '虹桥机场', poly: hongqiao, open: 1990, plan: 'res', note: '民用机场照常运营，用地不开发；范围内可以地下设站与地下穿越' },
       { id: 'lujiazui', name: '陆家嘴金融贸易区', poly: lujiazui, open: 1993, plan: 'cbd', note: '1990 年浦东开发开放，1993 年起陆家嘴金融贸易区大规模建设（史实）' },
@@ -95,6 +103,11 @@
       { id: 'jinqiao', name: '金桥·张江', streets: ['金桥镇', '张江镇', '唐镇', '花木街道'], open: 1994, plan: 'ind', pop: 8.7e6, note: '金桥出口加工区与张江高科技园区（史实）' },
       { id: 'waigaoqiao', name: '高桥·外高桥', streets: ['高桥镇', '高行镇', '高东镇', '曹路镇'], open: 1996, plan: 'ind', pop: 9.0e6, note: '1990 年设立外高桥保税区（史实）' },
       { id: 'beicai', name: '北蔡·三林', streets: ['北蔡镇', '三林镇', '康桥镇'], open: 2000, plan: 'res', pop: 10.5e6 },
+      // v2.9 东扩（172→276 格）：浦东国际机场—祝桥、南汇新城（临港·滴水湖）、南汇东南（惠南·芦潮港）。
+      // 显式多边形优先于区/街道归属；这三片以外的东扩范围仍归「浦东其他地区」
+      { id: 'pvg', name: '浦东国际机场·祝桥', open: 1999, plan: 'ind', poly: [[31.1300, 121.7450], [31.1300, 121.8550], [31.1850, 121.8550], [31.1850, 121.7450]].map(function (p) { return llW(p[0], p[1]); }), note: '1999 年 9 月浦东国际机场通航、2019 年卫星厅启用（史实）' },
+      { id: 'lingang', name: '南汇新城（临港·滴水湖）', open: 2005, plan: 'mix', poly: [[30.8400, 121.8500], [30.8400, 121.9950], [30.9450, 121.9950], [30.9450, 121.8500]].map(function (p) { return llW(p[0], p[1]); }), note: '2003 年临港新城开工、2005 年滴水湖建成，2019 年设临港新片区（史实）' },
+      { id: 'nanhui', name: '南汇东南（惠南·芦潮港）', open: 2005, plan: 'res', pop: 11.2e6, poly: [[30.9450, 121.7400], [30.9450, 121.9950], [31.1300, 121.9950], [31.1300, 121.7400]].map(function (p) { return llW(p[0], p[1]); }), note: '2001 年南汇撤县设区，2009 年并入浦东新区（史实）' },
       { id: 'pudong', name: '浦东其他地区', district: ['浦东新区'], open: 2005, plan: 'res', pop: 12.35e6 },
       { id: 'wusong', name: '吴淞·张庙', streets: ['吴淞街道', '张庙街道', '友谊路街道', '淞南镇', '高境镇', '庙行镇'], open: 1995, plan: 'resind' },
       { id: 'dachang', name: '大场·顾村', streets: ['大场镇', '顾村镇', '杨行镇', '罗店镇', '月浦镇'], open: 2000, plan: 'res', pop: 10.5e6 },
@@ -106,11 +119,16 @@
       { id: 'jiading', name: '嘉定（江桥·真新）', district: ['嘉定区'], open: 2005, plan: 'res', pop: 12.35e6 },
       // v2.8 新增区域（地图向北、南、西扩大后覆盖的片区）
       { id: 'changxing', name: '长兴岛·横沙', streets: ['长兴镇', '横沙乡'], open: 2009, plan: 'res', pop: 14.0e6, note: '2009 年沪崇高速通车后长兴岛接入（史实）' },
-      { id: 'chongming', name: '崇明岛（城桥·堡镇）', streets: ['城桥镇', '堡镇', '新河镇', '庙镇'], open: 2009, plan: 'res', pop: 14.0e6, note: '崇明岛南缘在图内，沪崇高速 2009 年通车（史实）' },
+      { id: 'chongming', name: '崇明岛（城桥·堡镇·陈家镇）', streets: ['城桥镇', '堡镇', '新河镇', '庙镇', '港西镇', '建设镇', '竖新镇', '港沿镇', '东平镇', '绿华镇', '陈家镇', '中兴镇', '向化镇', '三星镇'], district: ['崇明区'], open: 2009, plan: 'res', pop: 14.0e6, note: 'v2.10 地图北扩后崇明岛南部与中部进入图内；2009 年沪崇高速通车、2021 年崇明线开工（史实）' },
       { id: 'zhoupuz', name: '周浦·康桥·航头', streets: ['周浦镇', '航头镇', '新场镇', '宣桥镇'], open: 2005, plan: 'res', pop: 12.5e6, note: '浦东南部大型居住区（史实）' },
       { id: 'minhangan', name: '闵行南部（吴泾·紫竹）', streets: ['吴泾镇', '马桥镇'], open: 2002, plan: 'mix', pop: 12.0e6, note: '交大闵行校区与紫竹高新区（史实）' },
       { id: 'anting', name: '安亭·黄渡（苏州方向）', streets: ['安亭镇', '黄渡', '方泰'], open: 2005, plan: 'res', pop: 12.35e6, note: '上海 11 号线 2013 年延伸至安亭，2023 年花桥站连通苏州地铁（史实）' },
       { id: 'fengxian', name: '奉贤（海湾·南桥）', streets: ['南桥镇', '海湾旅游区', '奉城镇', '四团镇', '青村镇'], open: 2005, plan: 'res', pop: 13.0e6, note: '奉贤区南部到杭州湾海岸线，华东理工奉贤校区与海湾大学城在此（史实）' },
+      // v2.11 西扩（276→432 格）：青浦城区、朱家角·淀山湖、金泽·西岑（华为练秋湖）
+      { id: 'qingpu', name: '青浦（青浦城区·赵巷）', streets: ['夏阳街道', '盈浦街道', '香花桥街道', '赵巷镇', '重固镇', '白鹤镇'], open: 1999, plan: 'mix', pop: 12.0e6, note: '1999 年青浦撤县设区；17 号线 2017 年通到青浦新城（史实）' },
+      { id: 'zhujiajiao', name: '朱家角·淀山湖', streets: ['朱家角镇', '练塘镇'], open: 1999, plan: 'res', pop: 13.0e6, note: '朱家角古镇与淀山湖风景区；淀山湖是上海最大的淡水湖，也是主要水源地（史实）' },
+      { id: 'jinze', name: '金泽·西岑（华为练秋湖）', streets: ['金泽镇'], open: 2000, plan: 'mix', pop: 13.5e6, note: '2024 年底华为练秋湖研发中心在西岑入驻，规划约 3.5 万名研发人员（史实）；17 号线西延伸至西岑' },
+      { id: 'jinshan', name: '金山（石化·金山卫·枫泾）', streets: ['石化街道', '山阳镇', '金山卫镇', '张堰镇', '漕泾镇', '亭林镇', '朱泾镇', '枫泾镇', '吕巷镇', '廊下镇'], open: 1997, plan: 'ind', pop: 13.0e6, note: '1997 年金山撤县设区；上海石化与金山铁路（2012 年）在金山卫，枫泾古镇在西北（史实）' },
     ],
     defaultRegion: { id: 'outer', name: '外围地区', open: 2008, plan: 'res', pop: 15.0e6 },
     plans: CM.DATA.plans,
@@ -183,6 +201,15 @@
       Object.assign(atW(31.0050, 121.4560), { id: 'sh_ecnuMH', name: '华东师范大学（闵行）', w: 1100, d: 900, year: 2004, kind: 'campus' }),
       Object.assign(atW(31.3160, 121.3920), { id: 'sh_shuBS', name: '上海大学（宝山）', w: 1000, d: 800, year: 1999, kind: 'campus' }),
       Object.assign(atW(30.8400, 121.5100), { id: 'sh_ecustFX', name: '华东理工大学（奉贤）', w: 900, d: 700, year: 2007, kind: 'campus' }),
+      // v2.9 东扩地标（坐标取自 OSM aeroway=terminal）
+      Object.assign(atW(31.1535, 121.8059), { id: 'sh_pvgT2', name: '浦东国际机场 T2 航站楼', w: 900, d: 320, rot: 20, year: 2008, kind: 'hall' }),
+      // v2.10 崇明：上海交通大学崇明校区（规划，模拟 2030 年启用）
+      Object.assign(atW(31.5250, 121.8400), { id: 'sh_sjtuCM', name: '上海交通大学（崇明）', w: 1400, d: 1000, rot: -20, year: 2030, kind: 'campus' }),
+      // v2.11 西扩地标（青浦）
+      Object.assign(atW(31.1056, 121.0416), { id: 'sh_zhujiajiao', name: '朱家角古镇', w: 900, d: 700, year: 1700, kind: 'traditional' }),
+      Object.assign(atW(31.1006, 121.0146), { id: 'sh_dfjz', name: '东方绿舟', w: 1200, d: 900, year: 2000, kind: 'themepark' }),
+      Object.assign(atW(31.0756, 120.9061), { id: 'sh_daguanyuan', name: '上海大观园', w: 700, d: 600, year: 1988, kind: 'traditional' }),
+      Object.assign(atW(31.0720, 120.9760), { id: 'sh_huaweiCM', name: '华为练秋湖研发中心', w: 1600, d: 1100, rot: 15, year: 2024, kind: 'campus' }),
     ],
     // 重要设施（见 facility.js）：位置与启用 / 停用年份为史实参考（位置近似）；规模均为估算。
     // 枢纽 pax：市内接驳出行（汽车 + 地铁，万人次/日）；浦东国际机场在地图东缘以东约 9 km，于川沙一带设出图接驳点。
@@ -192,8 +219,8 @@
       { id: 'sh_west', n: '上海西站', t: 'rail', at: ll(31.2625, 121.4040), pax: [[1990, 0.5], [2010, 1], [2019, 1.5]] },
       { id: 'sh_hqstation', n: '虹桥站', t: 'rail', lm: 'sh_hqstation', y0: [2010, 7], pax: [[2010.5, 4], [2015, 10], [2019, 14], [2030, 16]], note: '2010 年 7 月虹桥综合交通枢纽启用，京沪高铁 2011 年通车。' },
       { id: 'sh_disney', n: '上海迪士尼乐园', t: 'scenic', lm: 'sh_disney', y0: [2016, 6], w: [[2016.5, 0.045], [2019, 0.05], [2020, 0.025], [2021, 0.04], [2023, 0.05]], we: 1.9, note: '主题乐园：周末与假日客流明显高于工作日（估算）；位于浦东川沙，2016 年 6 月开园。' },
-      { id: 'sh_pvgair', n: '浦东机场（川沙接驳）', t: 'air', ext: ['E', 9],at: ll(31.1900, 121.7000), y0: [1999, 9], pax: [[1999.7, 0.4], [2005, 2], [2010, 3.8], [2019, 7], [2030, 8]], note: '浦东国际机场 1999 年 9 月建成通航，在地图东缘以东约 9 km。此处为迎宾高速、磁浮与机场方向轨道交通出图的接驳点。' },
-      { id: 'sh_hqair', n: '虹桥机场', t: 'air', at: llW(31.1965, 121.3425), rw: [llW(31.2131, 121.3355), llW(31.1826, 121.3371)], pax: [[1990, 1.4], [1999.8, 3.5], [2000, 2.5], [2005, 4.9], [2010, 8.5], [2019, 12.5], [2030, 13]], note: '1999 年浦东国际机场（地图东缘以外）启用后国际航线逐步迁出；2010 年 T2 航站楼启用。' },
+      { id: 'sh_pvgair', n: '浦东国际机场', t: 'air', at: llW(31.1434, 121.8060), rw: [[210.6, 155.3], [215.3, 169.7]], y0: [1999, 9], pax: [[1999.7, 0.4], [2005, 2], [2010, 3.8], [2019, 7], [2030, 8]], note: '1999 年 9 月建成通航，2019 年卫星厅启用（史实）；v2.9 地图东扩后机场进入图内，磁浮与 2 号线可在图内接驳。' },
+      { id: 'sh_hqair', n: '虹桥机场', t: 'air', at: llW(31.1965, 121.3425), rw: [llW(31.2131, 121.3355), llW(31.1826, 121.3371)], pax: [[1990, 1.4], [1999.8, 3.5], [2000, 2.5], [2005, 4.9], [2010, 8.5], [2019, 12.5], [2030, 13]], note: '1999 年浦东国际机场启用后国际航线逐步迁出；2010 年 T2 航站楼启用。' },
       { id: 'sh_fudan', n: '复旦大学', t: 'uni', lm: 'sh_fudan', w: 0.035 },
       { id: 'sh_tongji', n: '同济大学', t: 'uni', lm: 'sh_tongji', w: 0.03 },
       { id: 'sh_sjtu', n: '上海交通大学（徐汇）', t: 'uni', lm: 'sh_sjtu', w: 0.02 },
@@ -209,10 +236,10 @@
       { id: 'sh_ecnuMH', n: '华东师范大学（闵行）', t: 'uni', lm: 'sh_ecnuMH', y0: [2004, 9], w: [[2004, 0.005], [2015, 0.02]] },
       { id: 'sh_shuBS', n: '上海大学（宝山）', t: 'uni', lm: 'sh_shuBS', y0: 1999, w: [[1999, 0.005], [2010, 0.02]] },
       { id: 'sh_ecustFX', n: '华东理工大学（奉贤）', t: 'uni', at: ll(30.8400, 121.5100), y0: [2007, 9], w: [[2007.7, 0.004], [2015, 0.012]], note: '华东理工大学奉贤校区 2007 年启用（史实），位于海湾大学城。' },
-      // v2.8 图外接驳设施
-      { id: 'sh_chongming', n: '崇明岛（城桥接驳）', t: 'scenic', ext: ['N', 22], at: ll(31.6200, 121.4000), y0: [2009, 10], w: [[2009.8, 0.005], [2015, 0.008], [2020, 0.01]], note: '崇明岛在地图北缘以北约 22 km。2009 年沪崇高速通车（史实）。此处为沪崇高速方向出图的接驳点。' },
-      { id: 'sh_3rdairport', n: '上海第三机场（南通方向）', t: 'air', ext: ['NW', 95], at: ll(31.7000, 121.2000), y0: [2024, 12], pax: [[2025, 0.2], [2030, 1.5], [2040, 4]], note: '上海第三机场（南通新机场）尚在规划建设中，在地图西北缘以外约 95 km。tag:模拟。' },
-      { id: 'sh_suzhou', n: '苏州方向接驳（安亭·花桥）', t: 'rail', ext: ['W', 18], at: ll(31.2900, 121.2000), y0: [2023, 6], pax: [[2023.5, 1], [2025, 2], [2030, 3]], note: '上海 11 号线 2013 年延伸至安亭，2023 年 6 月花桥站连通苏州 11 号线（史实）。此处为苏州方向出图的接驳点。' },
+      // v2.8 图外接驳设施（v2.9：崇明接驳、第三机场已取消——北缘是长江口水面，接驳口无法落地；崇明南缘由 chongming 区域与 2009 年沪崇高速纪事体现）
+      { id: 'sh_suzhou', n: '苏州方向接驳（安亭·花桥）', t: 'rail', ext: ['W', 45], at: ll(31.2900, 120.8800), y0: [2023, 6], pax: [[2023.5, 1], [2025, 2], [2030, 3]], note: '上海 11 号线 2013 年延伸至安亭，2023 年 6 月花桥站连通苏州 11 号线（史实）。接驳点设在地图西缘（白鹤以西），出图方向为昆山、苏州。' },      { id: 'sh_suzhou', n: '苏州方向接驳（安亭·花桥）', t: 'rail', ext: ['W', 18], at: ll(31.2900, 121.2700), y0: [2023, 6], pax: [[2023.5, 1], [2025, 2], [2030, 3]], note: '上海 11 号线 2013 年延伸至安亭，2023 年 6 月花桥站连通苏州 11 号线（史实）。接驳点设在地图西缘的安亭一带，出图方向为苏州。' },
+      // v2.10 华为练秋湖研发中心（青浦区金泽镇，图缘以西约 26 km）：员工通勤压向西侧，按图外接驳处理
+      { id: 'sh_huawei', n: '华为练秋湖研发中心', t: 'cbd', at: llW(31.0720, 120.9760), y0: [2024, 12], w: [[2024.9, 0.006], [2026, 0.018], [2032, 0.028]], note: '华为练秋湖研发中心位于青浦区金泽镇西岑（练秋湖东侧），2024 年底首批研发人员入驻，规划约 3.5 万人；v2.11 西扩后进入图内。' },
       { id: 'sh_ruijin', n: '瑞金医院', t: 'hosp', at: ll(31.2115, 121.4680), w: 0.06 },
       { id: 'sh_huashan', n: '华山医院', t: 'hosp', at: ll(31.2155, 121.4425), w: 0.05 },
       { id: 'sh_zhongshan', n: '中山医院', t: 'hosp', at: ll(31.1990, 121.4535), w: 0.06 },
@@ -298,7 +325,17 @@
       { y: 2009, m: 10, tag: '史实', title: '沪崇高速通车', desc: '上海长江桥隧工程通车，长兴岛与崇明岛经由隧桥接入大陆，崇明不再是孤岛。', fx: { grow: { region: ['changxing', 'chongming'], pop: 1.3, years: 8 } } },
       { y: 2013, m: 10, tag: '史实', title: '史实背景：地铁 11 号线延伸至安亭', desc: '11 号线延伸至嘉定安亭，为连接苏州方向打下基础。本局的地铁由你规划，真实线路不会自动出现。' },
       { y: 2023, m: 6, tag: '史实', title: '11 号线花桥站连通苏州地铁', desc: '上海 11 号线花桥站与苏州 11 号线（S1 线）实现换乘，沪苏两地地铁首次跨市连通。' },
-      { y: 2024, m: 12, tag: '模拟', title: '上海第三机场规划建设', desc: '上海第三机场（南通方向）进入规划建设阶段，在地图西北缘以外约 95 km。此后按模拟推演。' },
+      { y: 2024, m: 12, tag: '模拟', title: '上海第三机场规划建设', desc: '上海第三机场（南通方向）进入规划建设阶段，在地图西北缘以外约 95 km（图外，不参与本图模拟）。此后按模拟推演。' },
+      { y: 2002, m: 6, tag: '史实', title: '洋山深水港开工', desc: '洋山深水港一期工程开工，东海大桥同步建设；芦潮港成为深水港的陆上基地，港区在地图东缘以外约 30 km。' },
+      { y: 2005, m: 12, tag: '史实', title: '临港新城滴水湖建成', desc: '南汇新城（临港）以滴水湖为中心启动建设，2005 年底滴水湖成湖，临港一带进入开发。' },
+      { y: 2009, m: 4, tag: '史实', title: '南汇区并入浦东新区', desc: '撤销南汇区，其行政区域整体划入浦东新区，南汇东南与临港由浦东新区统一管理。' },
+      { y: 2019, m: 9, tag: '史实', title: '浦东机场卫星厅启用', desc: '浦东国际机场 S1、S2 卫星厅启用，机场旅客吞吐量此后超过 7600 万人次，机场与临港新片区成为东部增长极。' },
+      { y: 2021, m: 6, tag: '史实', title: '崇明线开工', desc: '轨道交通崇明线（金吉路—长兴岛—陈家镇）开工，两次穿越长江口，崇明岛首次接入城市轨道。' },
+      { y: 2029, m: 12, tag: '模拟', title: '崇明线通车', desc: '模拟：崇明线建成通车，陈家镇到金桥约 40 分钟，崇明与主城区形成通勤联系。' },
+      { y: 2030, m: 9, tag: '模拟', title: '上海交通大学崇明校区启用', desc: '模拟：上海交通大学崇明校区（规划于崇明区陈家镇一带）建成启用，以生态、农业与海洋学科为主，带动崇明东部人口与就业。' },
+      { y: 2024, m: 12, tag: '史实', title: '华为练秋湖研发中心启用', desc: '华为练秋湖研发中心在青浦区金泽镇启用，规划容纳约 3.5 万名研发人员。通勤需求压向图幅西缘，金泽、朱家角与青浦方向的道路与轨道接驳成为新的瓶颈。' },
+      { y: 2024, m: 12, tag: '史实', title: '17 号线西延伸至西岑', desc: '17 号线西延伸段（东方绿舟—西岑）开通，西岑站与华为练秋湖研发中心同步启用，青浦西部首次接入城市轨道。' },      { y: 2024, m: 12, tag: '史实', title: '17 号线西延伸至西岑', desc: '17 号线西延伸段（东方绿舟—西岑）开通，西岑站与华为练秋湖研发中心同步启用，青浦西部首次接入城市轨道。' },
+      { y: 2012, m: 9, tag: '史实', title: '金山铁路开通', desc: '金山铁路（上海南站—金山卫）改建通车，利用既有铁路开行市域列车，金山卫到上海南站约 30 分钟。' },
     ],
     // 本地历史主题任务：参考上海的发展需求，不要求复刻真实线路走向（奖励单位：万元，1990 年价格）
     histTasks: [
@@ -316,6 +353,11 @@
       { id: 'sh11', appear: [2004, 1], deadline: [2018, 12], type: 'connect', reward: 200000, title: '闵行大学城', desc: '交大闵行校区与华东师大闵行校区启用后，师生需要往返市区。连接交大闵行、华东师大闵行与莘庄。', anchors: [anchor('交大闵行', 31.0280, 121.4340, 4), anchor('华东师大闵行', 31.0050, 121.4560, 4), anchor('莘庄', 31.1110, 121.3850, 3)] },
       { id: 'sh12', appear: [2009, 1], deadline: [2022, 12], type: 'connect', reward: 200000, title: '崇明接驳', desc: '沪崇高速通车后，连接吴淞、长兴岛与崇明岛方向，让崇明居民可以乘地铁进出。', anchors: [anchor('吴淞', 31.3700, 121.4900, 3), anchor('长兴岛', 31.5000, 121.4500, 3), anchor('崇明城桥', 31.6200, 121.4000, 3)] },
       { id: 'sh13', appear: [2013, 1], deadline: [2028, 12], type: 'connect', reward: 200000, title: '苏州连通', desc: '11 号线延伸至安亭后，连接南翔、安亭与苏州方向接驳点，实现沪苏地铁跨市。', anchors: [anchor('南翔', 31.2950, 121.3200, 3), anchor('安亭', 31.2900, 121.2000, 3), anchor('花桥接驳', 31.2900, 121.1500, 3)] },
+      // v2.9 东扩追加任务（机场与临港方向）
+      { id: 'sh14', appear: [1999, 9], deadline: [2014, 12], type: 'connect', reward: 220000, title: '浦东机场接驳', desc: '浦东国际机场通航后，旅客需要从市区快速到达机场。连接龙阳路、张江与浦东国际机场。', anchors: [anchor('龙阳路', 31.2030, 121.5570, 3), anchor('张江', 31.2030, 121.5900, 3), anchorW('浦东国际机场', 31.1434, 121.8060, 4)] },
+      { id: 'sh15', appear: [2005, 1], deadline: [2020, 12], type: 'connect', reward: 200000, title: '临港新城', desc: '滴水湖成湖后，临港新城开始集聚人口与产业。连接惠南、滴水湖与芦潮港方向。', anchors: [anchorW('惠南', 31.0530, 121.7510, 3), anchorW('滴水湖', 30.9050, 121.9300, 4), anchorW('芦潮港', 30.8700, 121.8500, 3)] },
+      { id: 'sh16', appear: [2019, 1], deadline: [2030, 12], type: 'connect', reward: 220000, title: '崇明线', desc: '崇明线开工后，崇明岛需要与主城区连成一片。连接金桥、长兴岛与陈家镇（两次穿越长江口）。', anchors: [anchorW('金桥', 31.2627, 121.6082, 3), anchorW('长兴岛', 31.3914, 121.6905, 3), anchorW('陈家镇', 31.5284, 121.8284, 4)] },
+      { id: 'sh17', appear: [2008, 1], deadline: [2018, 12], type: 'connect', reward: 220000, title: '青浦方向', desc: '青浦新城与朱家角一带人口增长，需要一条从虹桥枢纽向西的骨干线。连接虹桥火车站、徐泾东与青浦新城。', anchors: [anchorW('虹桥火车站', 31.1965, 121.3265, 3), anchorW('徐泾东', 31.1940, 121.2940, 3), anchorW('青浦新城', 31.1608, 121.1211, 4)] },
     ],
     dynTasks: [
       { id: 'shd1', from: [1993, 1], to: [2003, 12], type: 'connect', months: 36, reward: 40000, title: '浦东沿江过江通勤', desc: '浦东沿江的居民每天过江上班。连接塘桥、东昌路与外滩。', anchors: [anchor('塘桥', 31.2190, 121.5190, 3), anchor('东昌路', 31.2330, 121.5100, 3), anchor('外滩', 31.2385, 121.4870, 3)] },
@@ -323,8 +365,11 @@
       { id: 'shd3', from: [2005, 1], to: [2018, 12], type: 'connect', months: 36, reward: 40000, title: '宝山大型居住区', desc: '连接大场、上海大学与上海站。', anchors: [anchor('大场', 31.2950, 121.4100, 3), anchor('上海大学', 31.3160, 121.3920, 3), anchor('上海站', 31.2495, 121.4560, 3)] },
       // v2.8 追加动态任务
       { id: 'shd4', from: [2005, 1], to: [2020, 12], type: 'connect', months: 36, reward: 35000, title: '浦东南部居住区', desc: '周浦与康桥成为大型居住区，居民需要通勤进城。连接周浦、康桥与龙阳路。', anchors: [anchor('周浦', 31.0800, 121.5600, 3), anchor('康桥', 31.1500, 121.6000, 3), anchor('龙阳路', 31.2030, 121.5570, 3)] },
+      { id: 'shd5', from: [2005, 1], to: [2030, 12], type: 'connect', months: 36, reward: 40000, title: '临港与南汇通勤', desc: '临港新城与南汇东南的居民需要往返惠南与滴水湖。连接惠南、芦潮港与滴水湖。', anchors: [anchorW('惠南', 31.0530, 121.7510, 3), anchorW('芦潮港', 30.8700, 121.8500, 3), anchorW('滴水湖', 30.9050, 121.9300, 3)] },
+      { id: 'shd6', from: [2009, 1], to: [2035, 12], type: 'connect', months: 40, reward: 40000, title: '崇明岛内通勤', desc: '城桥、新河与堡镇之间的岛内出行依赖公路。连接城桥、新河与堡镇。', anchors: [anchorW('城桥', 31.6298, 121.3934, 3), anchorW('新河', 31.5852, 121.5162, 3), anchorW('堡镇', 31.5389, 121.6138, 3)] },
+      { id: 'shd7', from: [2024, 12], to: [2045, 12], type: 'connect', months: 36, reward: 45000, title: '练秋湖通勤', desc: '华为练秋湖研发中心入驻后，研发人员主要住在青浦城区、朱家角与市区。连接青浦新城、朱家角与西岑（练秋湖）。', anchors: [anchorW('青浦新城', 31.1608, 121.1211, 3), anchorW('朱家角', 31.1056, 121.0416, 3), anchorW('西岑', 31.0700, 120.9616, 4)] },
     ],
-    taskNote: '历史主题任务参考上海 1990 年起的发展需求（南北与东西主轴、越江、浦东开发、世博会与虹桥枢纽），不要求按真实线路走向建设，只需满足目标描述。',
+    taskNote: '历史主题任务参考上海 1990 年起的发展需求（南北与东西主轴、越江、浦东开发、浦东机场、临港新城、世博会与虹桥枢纽），不要求按真实线路走向建设，只需满足目标描述。',
     // 城市策略难题（v2.3，可选挑战）
     scenarios: [
       { id: 'sh-sc1', theme: '上海：浦东开发与越江', title: '把浦西接进浦东腹地', type: 'budgetConnect', from: [1993, 1], to: [2004, 12], months: 60, rewardMonths: 3, budgetX: 1.2,
@@ -354,20 +399,23 @@
 
   (CM.MAP_LIST = CM.MAP_LIST || []).push({
     id: 'sh', name: '上海', title: '上海 · 1990', sub: '真实地理 · 1990 年起 · 人民币',
-    desc: '从 1990 年尚无地铁的上海开始：七百多万人挤在浦西，黄浦江上没有一座桥，浦东开发开放即将宣布。陆家嘴、虹桥枢纽与世博会将陆续到来，大学外迁、崇明接驳与苏州连通也将展开，地铁要追上中国最大城市的扩张。',
-    facts: [['范围', '43 km × 93 km'], ['起始', '1990 年'], ['人口', '约 830 万'], ['货币', '人民币（元）'], ['模式', '经营挑战 / 自由建造']],
-    modes: ['challenge', 'free'], kind: 'real', mapVersion: 3, extent: [
+    desc: '从 1990 年尚无地铁的上海开始：七百多万人挤在浦西，黄浦江上没有一座桥，浦东开发开放即将宣布。陆家嘴、虹桥枢纽、浦东机场与世博会将陆续到来，临港新城、大学外迁、崇明接驳与苏州连通也将展开，地铁要追上中国最大城市的扩张。',
+    facts: [['范围', '108 km × 122 km'], ['起始', '1990 年'], ['人口', '约 830 万'], ['货币', '人民币（元）'], ['模式', '经营挑战 / 自由建造']],
+    modes: ['challenge', 'free'], kind: 'real', mapVersion: 6, extent: [
       { from: 1, dx: 0, dy: 0, oldW: 124, oldH: 136, newW: 152, newH: 152, note: '地图向东扩大到川沙、曹路，向南扩大到梅陇、康桥一带', oldRegionIds: ['airport', 'lujiazui', 'hqcbd', 'huangpu', 'jingan', 'xuhui', 'changning', 'putuo', 'hongkou', 'yangpu', 'pdriver', 'jinqiao', 'waigaoqiao', 'beicai', 'pudong', 'wusong', 'dachang', 'xinzhuang', 'minhang', 'jiading', 'outer'], oldLandmarkIds: ['sh_bund', 'sh_park', 'sh_expoctr', 'sh_yuyuan', 'sh_jingan', 'sh_jade', 'sh_longhua', 'sh_xjh', 'sh_station', 'sh_fudan', 'sh_tongji', 'sh_sjtu', 'sh_ecnu', 'sh_pearl', 'sh_museum', 'sh_stadium', 'sh_gt', 'sh_jinmao', 'sh_hongkou', 'sh_sniec', 'sh_south', 'sh_swfc', 'sh_hqstation', 'sh_cnpav', 'sh_tower'] },
       { from: 2, dx: 20, dy: 40, oldW: 152, oldH: 152, newW: 172, newH: 372, note: '地图向北覆盖长江口与崇明岛南缘，向南覆盖奉贤与杭州湾海岸线，向西覆盖安亭方向', oldRegionIds: ['airport', 'lujiazui', 'hqcbd', 'huangpu', 'jingan', 'xuhui', 'changning', 'putuo', 'hongkou', 'yangpu', 'pdriver', 'jinqiao', 'waigaoqiao', 'beicai', 'pudong', 'wusong', 'dachang', 'xinzhuang', 'minhang', 'jiading', 'disney', 'outer'], oldLandmarkIds: ['sh_bund', 'sh_park', 'sh_expoctr', 'sh_yuyuan', 'sh_jingan', 'sh_jade', 'sh_longhua', 'sh_xjh', 'sh_station', 'sh_fudan', 'sh_tongji', 'sh_sjtu', 'sh_ecnu', 'sh_pearl', 'sh_museum', 'sh_stadium', 'sh_gt', 'sh_jinmao', 'sh_hongkou', 'sh_sniec', 'sh_south', 'sh_swfc', 'sh_hqstation', 'sh_cnpav', 'sh_tower', 'sh_disney'] },
+      { from: 3, dx: 0, dy: 0, oldW: 172, oldH: 372, newW: 276, newH: 372, note: '地图向东扩到浦东国际机场、南汇新城（临港·滴水湖）与南汇嘴（芦潮港），东边界由 121.71°E 到 121.98°E', oldRegionIds: ["airport","lujiazui","hqcbd","huangpu","jingan","xuhui","changning","putuo","hongkou","yangpu","pdriver","jinqiao","waigaoqiao","beicai","pudong","wusong","dachang","xinzhuang","minhang","chuansha","disney","jiading","changxing","chongming","zhoupuz","minhangan","anting","fengxian"], oldLandmarkIds: ["sh_bund","sh_park","sh_expoctr","sh_yuyuan","sh_jingan","sh_jade","sh_longhua","sh_xjh","sh_station","sh_fudan","sh_tongji","sh_sjtu","sh_ecnu","sh_pearl","sh_museum","sh_stadium","sh_gt","sh_jinmao","sh_hongkou","sh_sniec","sh_south","sh_swfc","sh_hqstation","sh_cnpav","sh_tower","sh_disney","sh_sjtuMH","sh_fudanJW","sh_tongjiJD","sh_ecnuMH","sh_shuBS","sh_ecustFX"] },
+      { from: 4, dx: 0, dy: 116, oldW: 276, oldH: 372, newW: 276, newH: 488, note: '地图向北扩到崇明全岛（城桥、新河、堡镇、陈家镇）与长江口北支，纵向由 93 km 到 122 km', oldRegionIds: ["airport","lujiazui","hqcbd","huangpu","jingan","xuhui","changning","putuo","hongkou","yangpu","pdriver","jinqiao","waigaoqiao","beicai","pvg","lingang","nanhui","pudong","wusong","dachang","xinzhuang","minhang","chuansha","disney","jiading","changxing","chongming","zhoupuz","minhangan","anting","fengxian"], oldLandmarkIds: ["sh_bund","sh_park","sh_expoctr","sh_yuyuan","sh_jingan","sh_jade","sh_longhua","sh_xjh","sh_station","sh_fudan","sh_tongji","sh_sjtu","sh_ecnu","sh_pearl","sh_museum","sh_stadium","sh_gt","sh_jinmao","sh_hongkou","sh_sniec","sh_south","sh_swfc","sh_hqstation","sh_cnpav","sh_tower","sh_disney","sh_sjtuMH","sh_fudanJW","sh_tongjiJD","sh_ecnuMH","sh_shuBS","sh_ecustFX","sh_pvgT2"] },
+      { from: 5, dx: 156, dy: 0, oldW: 276, oldH: 488, newW: 432, newH: 488, note: '地图向西扩到青浦全区（青浦城区、朱家角、练塘、金泽）与淀山湖东半，横向由 69 km 到 108 km；华为练秋湖研发中心进入图内', oldRegionIds: ["airport","lujiazui","hqcbd","huangpu","jingan","xuhui","changning","putuo","hongkou","yangpu","pdriver","jinqiao","waigaoqiao","beicai","pvg","lingang","nanhui","pudong","wusong","dachang","xinzhuang","minhang","chuansha","disney","jiading","changxing","chongming","zhoupuz","minhangan","anting","fengxian"], oldLandmarkIds: ["sh_bund","sh_park","sh_expoctr","sh_yuyuan","sh_jingan","sh_jade","sh_longhua","sh_xjh","sh_station","sh_fudan","sh_tongji","sh_sjtu","sh_ecnu","sh_pearl","sh_museum","sh_stadium","sh_gt","sh_jinmao","sh_hongkou","sh_sniec","sh_south","sh_swfc","sh_hqstation","sh_cnpav","sh_tower","sh_disney","sh_sjtuMH","sh_fudanJW","sh_tongjiJD","sh_ecnuMH","sh_shuBS","sh_ecustFX","sh_pvgT2","sh_sjtuCM"] },
     ], scenario: 'sh-1990',
     region: '中国内地', tagline: '浦江两岸，从零开始的超大网络', difficulty: 3, tags: ['无地铁开局', '越江', '超大城市', '大学外迁', '崇明接驳'],
-    intro: '1990 年的上海，七百多万人挤在黄浦江西岸，公交车厢里人贴着人；对岸的浦东还是农田与码头，江上一座桥也没有。4 月，浦东开发开放的消息传来。你要从第一条南北线开始，跨过黄浦江，跟上一座超大城市三十年的扩张——北到崇明，南到奉贤，西接苏州。',
+    intro: '1990 年的上海，七百多万人挤在黄浦江西岸，公交车厢里人贴着人；对岸的浦东还是农田与码头，江上一座桥也没有。4 月，浦东开发开放的消息传来。你要从第一条南北线开始，跨过黄浦江，跟上一座超大城市三十年的扩张——北到崇明，南到奉贤，东到临港，西到淀山湖与青浦金泽。',
     features: [['building', '陆家嘴天际线', '东方明珠、金茂、环球金融中心与上海中心按年份出现'], ['building', '大学外迁校区', '交大闵行、复旦江湾、同济嘉定、华东师大闵行等校区按年份出现']],
-    highlights: [[1990, '浦东开发开放'], [1991, '南浦大桥通车'], [2004, '大学外迁校区启用'], [2009, '沪崇高速通车'], [2010, '虹桥枢纽启用、世博会开幕'], [2015, '上海中心大厦落成'], [2023, '11号线连通苏州']],
+    highlights: [[1990, '浦东开发开放'], [1991, '南浦大桥通车'], [2004, '大学外迁校区启用'], [2009, '沪崇高速通车'], [2005, '临港新城与滴水湖'], [2009, '沪崇高速通车'], [2010, '虹桥枢纽启用、世博会开幕'], [2021, '崇明线开工'], [2015, '上海中心大厦落成'], [2023, '11号线连通苏州']],
     geo: G, data: data,
     econ: { devOffset: 2, money: 1 },   // 出行选择参数：上海 1990 年约对应广州样本 1992 年的发展阶段
     cfg: {
-      W: 172, H: 372, START: { y: 1990, m: 1, d: 1, minute: 360 },
+      W: 432, H: 488, START: { y: 1990, m: 1, d: 1, minute: 360 },
       growth: Object.assign({}, CM.CFG.growth, { popCurve: [[1990, 8.3e6], [1995, 9.0e6], [2000, 10.6e6], [2005, 12.6e6], [2010, 14.8e6], [2015, 15.7e6], [2020, 16.3e6], [2030, 16.9e6], [2050, 17.2e6], [2300, 17.5e6]], histEnd: 2020, jobsRatio: [[1990, 0.56], [2000, 0.55], [2010, 0.58], [2020, 0.6]] }),
       money: { code: 'CNY', unit: '元', wan: '万元', yi: '亿元', sym: '¥' },
       econBase: 1990,
@@ -404,6 +452,6 @@
         ],
       },
     },
-    cam: { cx: 83, cy: 120, zoom: 16 },
+    cam: { cx: 237, cy: 239, zoom: 16 },   // 人民广场（432×488 网格，西扩 +156、北扩 +116 后）
   });
 })(window.CM);

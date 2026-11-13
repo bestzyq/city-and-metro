@@ -30,3 +30,11 @@ shdata/tiles/
 shdata/progress.json
 shdata/china-latest.osm.pbf
 
+shdata/coastline.json
+shdata/*.osm.pbf
+shdata/east_block.json
+shdata/north_block.json
+shdata/west_block.json
+shdata/lakes.json
+shdata/west_js_block.json
+shdata/sw_zj_block.json

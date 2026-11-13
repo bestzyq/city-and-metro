@@ -75,7 +75,8 @@ C.useMap('hz');{
 console.log('PASS browser synchronization integration checks');
 // Outside-map airports retain demand at their city-side host node. A lone gate
 // station is insufficient: it must be served by an operating metro route.
-for(const map of ['gz','tp','sh']){
+// v2.9 起上海的两个机场（虹桥、浦东）都在图内，图外机场只剩广州与台北
+for(const map of ['gz','tp']){
   C.useMap(map);const city=new C.City();city.generate(12345,2024);
   const model=new C.Model(city,{deferDemand:true});model.setYear(2024);model.buildZones();model.buildDemand();
   const f=model.fn.list.find(f=>f.ext);assert.ok(f,map+' outside airport');
