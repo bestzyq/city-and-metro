@@ -104,8 +104,15 @@
       // 上海迪士尼度假区（v2.2，OSM 坐标）：乐园、迪士尼小镇与星愿公园；2016 年 6 月开园，之前为预留用地（乐园用地不分配普通住宅与就业）
       { id: 'disney', name: '上海迪士尼度假区', park: true, open: 2016, plan: 'res', poly: [[31.1506, 121.6497], [31.1506, 121.6626], [31.1455, 121.6697], [31.1375, 121.6697], [31.1375, 121.6557], [31.1411, 121.6497]].map(function (p) { return llW(p[0], p[1]); }), note: '2016 年 6 月上海迪士尼乐园开园（史实）；同年 4 月地铁 11 号线迪士尼站启用（史实）' },
       { id: 'jiading', name: '嘉定（江桥·真新）', district: ['嘉定区'], open: 2005, plan: 'res', pop: 12.35e6 },
+      // v2.8 新增区域（地图向北、南、西扩大后覆盖的片区）
+      { id: 'changxing', name: '长兴岛·横沙', streets: ['长兴镇', '横沙乡'], open: 2009, plan: 'res', pop: 14.0e6, note: '2009 年沪崇高速通车后长兴岛接入（史实）' },
+      { id: 'chongming', name: '崇明岛（城桥·堡镇）', streets: ['城桥镇', '堡镇', '新河镇', '庙镇'], open: 2009, plan: 'res', pop: 14.0e6, note: '崇明岛南缘在图内，沪崇高速 2009 年通车（史实）' },
+      { id: 'zhoupuz', name: '周浦·康桥·航头', streets: ['周浦镇', '航头镇', '新场镇', '宣桥镇'], open: 2005, plan: 'res', pop: 12.5e6, note: '浦东南部大型居住区（史实）' },
+      { id: 'minhangan', name: '闵行南部（吴泾·紫竹）', streets: ['吴泾镇', '马桥镇'], open: 2002, plan: 'mix', pop: 12.0e6, note: '交大闵行校区与紫竹高新区（史实）' },
+      { id: 'anting', name: '安亭·黄渡（苏州方向）', streets: ['安亭镇', '黄渡', '方泰'], open: 2005, plan: 'res', pop: 12.35e6, note: '上海 11 号线 2013 年延伸至安亭，2023 年花桥站连通苏州地铁（史实）' },
+      { id: 'fengxian', name: '奉贤（海湾·南桥）', streets: ['南桥镇', '海湾旅游区', '奉城镇', '四团镇', '青村镇'], open: 2005, plan: 'res', pop: 13.0e6, note: '奉贤区南部到杭州湾海岸线，华东理工奉贤校区与海湾大学城在此（史实）' },
     ],
-    defaultRegion: { id: 'outer', name: '外围地区', open: 2008, plan: 'res', pop: 13.95e6 },
+    defaultRegion: { id: 'outer', name: '外围地区', open: 2008, plan: 'res', pop: 15.0e6 },
     plans: CM.DATA.plans,
     // 1990 年人口与就业中心（估算，人/km²；r 约为影响半径 km）
     centers: [
@@ -169,6 +176,13 @@
       Object.assign(atW(31.1865, 121.4899), { id: 'sh_cnpav', name: '中国馆', w: 140, d: 140, year: 2010, kind: 'museum', style: 'crown' }),
       Object.assign(atW(31.2356, 121.5013), { id: 'sh_tower', name: '上海中心大厦', w: 80, d: 80, year: 2015, kind: 'skyscraper', style: 'shtower', h: 632 }),
       Object.assign(atW(31.1463, 121.6560), { id: 'sh_disney', name: '上海迪士尼乐园', w: 1150, d: 900, h: 60, year: 2016, kind: 'themepark', style: 'castle' }),   // 约 91 公顷，奇幻童话城堡约 60 m
+      // v2.8 大学外迁校区（按启用年份出现）
+      Object.assign(atW(31.0280, 121.4340), { id: 'sh_sjtuMH', name: '上海交通大学（闵行）', w: 1400, d: 1100, year: 1987, kind: 'campus' }),
+      Object.assign(atW(31.3370, 121.5140), { id: 'sh_fudanJW', name: '复旦大学（江湾）', w: 1000, d: 800, year: 2005, kind: 'campus' }),
+      Object.assign(atW(31.2880, 121.2170), { id: 'sh_tongjiJD', name: '同济大学（嘉定）', w: 1200, d: 900, year: 2004, kind: 'campus' }),
+      Object.assign(atW(31.0050, 121.4560), { id: 'sh_ecnuMH', name: '华东师范大学（闵行）', w: 1100, d: 900, year: 2004, kind: 'campus' }),
+      Object.assign(atW(31.3160, 121.3920), { id: 'sh_shuBS', name: '上海大学（宝山）', w: 1000, d: 800, year: 1999, kind: 'campus' }),
+      Object.assign(atW(30.8400, 121.5100), { id: 'sh_ecustFX', name: '华东理工大学（奉贤）', w: 900, d: 700, year: 2007, kind: 'campus' }),
     ],
     // 重要设施（见 facility.js）：位置与启用 / 停用年份为史实参考（位置近似）；规模均为估算。
     // 枢纽 pax：市内接驳出行（汽车 + 地铁，万人次/日）；浦东国际机场在地图东缘以东约 9 km，于川沙一带设出图接驳点。
@@ -188,6 +202,17 @@
       { id: 'sh_shu', n: '上海大学（宝山）', t: 'uni', at: ll(31.3160, 121.3920), y0: 1999, w: 0.02 },
       { id: 'sh_ecust', n: '华东理工大学', t: 'uni', at: ll(31.1440, 121.4235), w: 0.015 },
       { id: 'sh_dhu', n: '东华大学（延安路）', t: 'uni', at: llW(31.20622, 121.41055), w: 0.01 },
+      // v2.8 大学外迁校区
+      { id: 'sh_sjtuMH', n: '上海交通大学（闵行）', t: 'uni', lm: 'sh_sjtuMH', y0: [1987, 9], w: [[1987, 0.003], [2000, 0.025], [2010, 0.035]] },
+      { id: 'sh_fudanJW', n: '复旦大学（江湾）', t: 'uni', lm: 'sh_fudanJW', y0: [2005, 9], w: [[2005, 0.005], [2015, 0.02]] },
+      { id: 'sh_tongjiJD', n: '同济大学（嘉定）', t: 'uni', lm: 'sh_tongjiJD', y0: [2004, 9], w: [[2004, 0.003], [2015, 0.015]] },
+      { id: 'sh_ecnuMH', n: '华东师范大学（闵行）', t: 'uni', lm: 'sh_ecnuMH', y0: [2004, 9], w: [[2004, 0.005], [2015, 0.02]] },
+      { id: 'sh_shuBS', n: '上海大学（宝山）', t: 'uni', lm: 'sh_shuBS', y0: 1999, w: [[1999, 0.005], [2010, 0.02]] },
+      { id: 'sh_ecustFX', n: '华东理工大学（奉贤）', t: 'uni', at: ll(30.8400, 121.5100), y0: [2007, 9], w: [[2007.7, 0.004], [2015, 0.012]], note: '华东理工大学奉贤校区 2007 年启用（史实），位于海湾大学城。' },
+      // v2.8 图外接驳设施
+      { id: 'sh_chongming', n: '崇明岛（城桥接驳）', t: 'scenic', ext: ['N', 22], at: ll(31.6200, 121.4000), y0: [2009, 10], w: [[2009.8, 0.005], [2015, 0.008], [2020, 0.01]], note: '崇明岛在地图北缘以北约 22 km。2009 年沪崇高速通车（史实）。此处为沪崇高速方向出图的接驳点。' },
+      { id: 'sh_3rdairport', n: '上海第三机场（南通方向）', t: 'air', ext: ['NW', 95], at: ll(31.7000, 121.2000), y0: [2024, 12], pax: [[2025, 0.2], [2030, 1.5], [2040, 4]], note: '上海第三机场（南通新机场）尚在规划建设中，在地图西北缘以外约 95 km。tag:模拟。' },
+      { id: 'sh_suzhou', n: '苏州方向接驳（安亭·花桥）', t: 'rail', ext: ['W', 18], at: ll(31.2900, 121.2000), y0: [2023, 6], pax: [[2023.5, 1], [2025, 2], [2030, 3]], note: '上海 11 号线 2013 年延伸至安亭，2023 年 6 月花桥站连通苏州 11 号线（史实）。此处为苏州方向出图的接驳点。' },
       { id: 'sh_ruijin', n: '瑞金医院', t: 'hosp', at: ll(31.2115, 121.4680), w: 0.06 },
       { id: 'sh_huashan', n: '华山医院', t: 'hosp', at: ll(31.2155, 121.4425), w: 0.05 },
       { id: 'sh_zhongshan', n: '中山医院', t: 'hosp', at: ll(31.1990, 121.4535), w: 0.06 },
@@ -265,6 +290,15 @@
       { y: 2018, m: 11, tag: '史实', title: '首届中国国际进口博览会', desc: '在虹桥的国家会展中心（地图范围外附近）举行。', fx: { demand: { hub: 1.1, months: 1 } } },
       { y: 2020, m: 1, tag: '史实', title: '新冠肺炎疫情', desc: '春节后城市活动大幅减少，客流骤降，之后逐步恢复。', fx: { demand: { sc: 0.7, sh: 0.75, lz: 0.6, hub: 0.5, months: 3, fade: 1 } } },
       { y: 2021, m: 1, tag: '模拟', title: '进入模拟发展阶段', desc: '此后人口、道路和区域变化按模拟规则推演，不代表真实历史。' },
+      // v2.8 追加事件（纪事只能末尾追加：已发生记录按序号保存）
+      { y: 1987, m: 9, tag: '史实', title: '交大闵行校区启用', desc: '上海交通大学在闵行建设新校区，逐步成为主校区。', fx: { grow: { region: 'minhangan', jobs: 1.3, years: 8 } } },
+      { y: 1999, m: 9, tag: '史实', title: '上海大学宝山校区启用', desc: '上海大学新校区在宝山启用，成为上海规模最大的市属高校之一。' },
+      { y: 2004, m: 9, tag: '史实', title: '同济嘉定校区与华东师大闵行校区启用', desc: '同济大学嘉定校区（汽车学院等）和华东师范大学闵行校区同年启用，高校外迁加速。', fx: { grow: { region: ['minhangan', 'anting'], jobs: 1.2, years: 6 } } },
+      { y: 2005, m: 9, tag: '史实', title: '复旦江湾校区搬迁', desc: '复旦大学在原江湾机场用地建设新校区，师生陆续迁入。' },
+      { y: 2009, m: 10, tag: '史实', title: '沪崇高速通车', desc: '上海长江桥隧工程通车，长兴岛与崇明岛经由隧桥接入大陆，崇明不再是孤岛。', fx: { grow: { region: ['changxing', 'chongming'], pop: 1.3, years: 8 } } },
+      { y: 2013, m: 10, tag: '史实', title: '史实背景：地铁 11 号线延伸至安亭', desc: '11 号线延伸至嘉定安亭，为连接苏州方向打下基础。本局的地铁由你规划，真实线路不会自动出现。' },
+      { y: 2023, m: 6, tag: '史实', title: '11 号线花桥站连通苏州地铁', desc: '上海 11 号线花桥站与苏州 11 号线（S1 线）实现换乘，沪苏两地地铁首次跨市连通。' },
+      { y: 2024, m: 12, tag: '模拟', title: '上海第三机场规划建设', desc: '上海第三机场（南通方向）进入规划建设阶段，在地图西北缘以外约 95 km。此后按模拟推演。' },
     ],
     // 本地历史主题任务：参考上海的发展需求，不要求复刻真实线路走向（奖励单位：万元，1990 年价格）
     histTasks: [
@@ -278,11 +312,17 @@
       { id: 'sh8', appear: [2010, 1], deadline: [2016, 12], type: 'coverage', target: 0.6, reward: 300000, title: '地铁覆盖六成人口', desc: '2016 年底前，步行 15 分钟可到达地铁站的人口不低于全市人口的 60%。' },
       { id: 'sh9', appear: [2012, 1], deadline: [2020, 12], type: 'connect', reward: 200000, title: '浦东腹地', desc: '不经陆家嘴，连接金桥、张江与世纪公园。', anchors: [anchor('金桥', 31.2620, 121.5850, 3), anchor('张江', 31.2030, 121.5900, 3), anchor('世纪公园', 31.2170, 121.5485, 3)] },
       { id: 'sh10', appear: [2013, 1], deadline: [2016, 12], type: 'connect', reward: 200000, title: '迪士尼接驳', desc: '乐园开园前，连接上海迪士尼乐园、秀沿路与龙阳路，让游客从市区直达度假区。', anchors: [anchorW('上海迪士尼乐园', 31.1434, 121.6637, 3), anchorW('秀沿路', 31.1403, 121.5942, 3), anchor('龙阳路', 31.2030, 121.5570, 3)] },
+      // v2.8 追加任务
+      { id: 'sh11', appear: [2004, 1], deadline: [2018, 12], type: 'connect', reward: 200000, title: '闵行大学城', desc: '交大闵行校区与华东师大闵行校区启用后，师生需要往返市区。连接交大闵行、华东师大闵行与莘庄。', anchors: [anchor('交大闵行', 31.0280, 121.4340, 4), anchor('华东师大闵行', 31.0050, 121.4560, 4), anchor('莘庄', 31.1110, 121.3850, 3)] },
+      { id: 'sh12', appear: [2009, 1], deadline: [2022, 12], type: 'connect', reward: 200000, title: '崇明接驳', desc: '沪崇高速通车后，连接吴淞、长兴岛与崇明岛方向，让崇明居民可以乘地铁进出。', anchors: [anchor('吴淞', 31.3700, 121.4900, 3), anchor('长兴岛', 31.5000, 121.4500, 3), anchor('崇明城桥', 31.6200, 121.4000, 3)] },
+      { id: 'sh13', appear: [2013, 1], deadline: [2028, 12], type: 'connect', reward: 200000, title: '苏州连通', desc: '11 号线延伸至安亭后，连接南翔、安亭与苏州方向接驳点，实现沪苏地铁跨市。', anchors: [anchor('南翔', 31.2950, 121.3200, 3), anchor('安亭', 31.2900, 121.2000, 3), anchor('花桥接驳', 31.2900, 121.1500, 3)] },
     ],
     dynTasks: [
       { id: 'shd1', from: [1993, 1], to: [2003, 12], type: 'connect', months: 36, reward: 40000, title: '浦东沿江过江通勤', desc: '浦东沿江的居民每天过江上班。连接塘桥、东昌路与外滩。', anchors: [anchor('塘桥', 31.2190, 121.5190, 3), anchor('东昌路', 31.2330, 121.5100, 3), anchor('外滩', 31.2385, 121.4870, 3)] },
       { id: 'shd2', from: [1998, 1], to: [2010, 12], type: 'connect', months: 36, reward: 35000, title: '古北与虹桥开发区', desc: '连接古北、虹桥路与徐家汇。', anchors: [anchor('古北', 31.2010, 121.3980, 3), anchor('虹桥路', 31.1980, 121.4210, 3), anchor('徐家汇', 31.1940, 121.4370, 3)] },
       { id: 'shd3', from: [2005, 1], to: [2018, 12], type: 'connect', months: 36, reward: 40000, title: '宝山大型居住区', desc: '连接大场、上海大学与上海站。', anchors: [anchor('大场', 31.2950, 121.4100, 3), anchor('上海大学', 31.3160, 121.3920, 3), anchor('上海站', 31.2495, 121.4560, 3)] },
+      // v2.8 追加动态任务
+      { id: 'shd4', from: [2005, 1], to: [2020, 12], type: 'connect', months: 36, reward: 35000, title: '浦东南部居住区', desc: '周浦与康桥成为大型居住区，居民需要通勤进城。连接周浦、康桥与龙阳路。', anchors: [anchor('周浦', 31.0800, 121.5600, 3), anchor('康桥', 31.1500, 121.6000, 3), anchor('龙阳路', 31.2030, 121.5570, 3)] },
     ],
     taskNote: '历史主题任务参考上海 1990 年起的发展需求（南北与东西主轴、越江、浦东开发、世博会与虹桥枢纽），不要求按真实线路走向建设，只需满足目标描述。',
     // 城市策略难题（v2.3，可选挑战）
@@ -314,17 +354,20 @@
 
   (CM.MAP_LIST = CM.MAP_LIST || []).push({
     id: 'sh', name: '上海', title: '上海 · 1990', sub: '真实地理 · 1990 年起 · 人民币',
-    desc: '从 1990 年尚无地铁的上海开始：七百多万人挤在浦西，黄浦江上没有一座桥，浦东开发开放即将宣布。陆家嘴、虹桥枢纽与世博会将陆续到来，地铁要追上中国最大城市的扩张。',
-    facts: [['范围', '38 km × 38 km'], ['起始', '1990 年'], ['人口', '约 830 万'], ['货币', '人民币（元）'], ['模式', '经营挑战 / 自由建造']],
-    modes: ['challenge', 'free'], kind: 'real', mapVersion: 2, extent: { from: 1, dx: 0, dy: 0, oldW: 124, oldH: 136, note: '地图向东扩大到川沙、曹路，向南扩大到梅陇、康桥一带', oldRegionIds: ['airport', 'lujiazui', 'hqcbd', 'huangpu', 'jingan', 'xuhui', 'changning', 'putuo', 'hongkou', 'yangpu', 'pdriver', 'jinqiao', 'waigaoqiao', 'beicai', 'pudong', 'wusong', 'dachang', 'xinzhuang', 'minhang', 'jiading', 'outer'], oldLandmarkIds: ['sh_bund', 'sh_park', 'sh_expoctr', 'sh_yuyuan', 'sh_jingan', 'sh_jade', 'sh_longhua', 'sh_xjh', 'sh_station', 'sh_fudan', 'sh_tongji', 'sh_sjtu', 'sh_ecnu', 'sh_pearl', 'sh_museum', 'sh_stadium', 'sh_gt', 'sh_jinmao', 'sh_hongkou', 'sh_sniec', 'sh_south', 'sh_swfc', 'sh_hqstation', 'sh_cnpav', 'sh_tower'] }, scenario: 'sh-1990',
-    region: '中国内地', tagline: '浦江两岸，从零开始的超大网络', difficulty: 3, tags: ['无地铁开局', '越江', '超大城市'],
-    intro: '1990 年的上海，七百多万人挤在黄浦江西岸，公交车厢里人贴着人；对岸的浦东还是农田与码头，江上一座桥也没有。4 月，浦东开发开放的消息传来。你要从第一条南北线开始，跨过黄浦江，跟上一座超大城市三十年的扩张。',
-    features: [['building', '陆家嘴天际线', '东方明珠、金茂、环球金融中心与上海中心按年份出现']],
-    highlights: [[1990, '浦东开发开放'], [1991, '南浦大桥通车'], [1994, '东方明珠落成'], [2010, '虹桥枢纽启用、世博会开幕'], [2015, '上海中心大厦落成']],
+    desc: '从 1990 年尚无地铁的上海开始：七百多万人挤在浦西，黄浦江上没有一座桥，浦东开发开放即将宣布。陆家嘴、虹桥枢纽与世博会将陆续到来，大学外迁、崇明接驳与苏州连通也将展开，地铁要追上中国最大城市的扩张。',
+    facts: [['范围', '43 km × 93 km'], ['起始', '1990 年'], ['人口', '约 830 万'], ['货币', '人民币（元）'], ['模式', '经营挑战 / 自由建造']],
+    modes: ['challenge', 'free'], kind: 'real', mapVersion: 3, extent: [
+      { from: 1, dx: 0, dy: 0, oldW: 124, oldH: 136, newW: 152, newH: 152, note: '地图向东扩大到川沙、曹路，向南扩大到梅陇、康桥一带', oldRegionIds: ['airport', 'lujiazui', 'hqcbd', 'huangpu', 'jingan', 'xuhui', 'changning', 'putuo', 'hongkou', 'yangpu', 'pdriver', 'jinqiao', 'waigaoqiao', 'beicai', 'pudong', 'wusong', 'dachang', 'xinzhuang', 'minhang', 'jiading', 'outer'], oldLandmarkIds: ['sh_bund', 'sh_park', 'sh_expoctr', 'sh_yuyuan', 'sh_jingan', 'sh_jade', 'sh_longhua', 'sh_xjh', 'sh_station', 'sh_fudan', 'sh_tongji', 'sh_sjtu', 'sh_ecnu', 'sh_pearl', 'sh_museum', 'sh_stadium', 'sh_gt', 'sh_jinmao', 'sh_hongkou', 'sh_sniec', 'sh_south', 'sh_swfc', 'sh_hqstation', 'sh_cnpav', 'sh_tower'] },
+      { from: 2, dx: 20, dy: 40, oldW: 152, oldH: 152, newW: 172, newH: 372, note: '地图向北覆盖长江口与崇明岛南缘，向南覆盖奉贤与杭州湾海岸线，向西覆盖安亭方向', oldRegionIds: ['airport', 'lujiazui', 'hqcbd', 'huangpu', 'jingan', 'xuhui', 'changning', 'putuo', 'hongkou', 'yangpu', 'pdriver', 'jinqiao', 'waigaoqiao', 'beicai', 'pudong', 'wusong', 'dachang', 'xinzhuang', 'minhang', 'jiading', 'disney', 'outer'], oldLandmarkIds: ['sh_bund', 'sh_park', 'sh_expoctr', 'sh_yuyuan', 'sh_jingan', 'sh_jade', 'sh_longhua', 'sh_xjh', 'sh_station', 'sh_fudan', 'sh_tongji', 'sh_sjtu', 'sh_ecnu', 'sh_pearl', 'sh_museum', 'sh_stadium', 'sh_gt', 'sh_jinmao', 'sh_hongkou', 'sh_sniec', 'sh_south', 'sh_swfc', 'sh_hqstation', 'sh_cnpav', 'sh_tower', 'sh_disney'] },
+    ], scenario: 'sh-1990',
+    region: '中国内地', tagline: '浦江两岸，从零开始的超大网络', difficulty: 3, tags: ['无地铁开局', '越江', '超大城市', '大学外迁', '崇明接驳'],
+    intro: '1990 年的上海，七百多万人挤在黄浦江西岸，公交车厢里人贴着人；对岸的浦东还是农田与码头，江上一座桥也没有。4 月，浦东开发开放的消息传来。你要从第一条南北线开始，跨过黄浦江，跟上一座超大城市三十年的扩张——北到崇明，南到奉贤，西接苏州。',
+    features: [['building', '陆家嘴天际线', '东方明珠、金茂、环球金融中心与上海中心按年份出现'], ['building', '大学外迁校区', '交大闵行、复旦江湾、同济嘉定、华东师大闵行等校区按年份出现']],
+    highlights: [[1990, '浦东开发开放'], [1991, '南浦大桥通车'], [2004, '大学外迁校区启用'], [2009, '沪崇高速通车'], [2010, '虹桥枢纽启用、世博会开幕'], [2015, '上海中心大厦落成'], [2023, '11号线连通苏州']],
     geo: G, data: data,
     econ: { devOffset: 2, money: 1 },   // 出行选择参数：上海 1990 年约对应广州样本 1992 年的发展阶段
     cfg: {
-      W: 152, H: 152, START: { y: 1990, m: 1, d: 1, minute: 360 },
+      W: 172, H: 372, START: { y: 1990, m: 1, d: 1, minute: 360 },
       growth: Object.assign({}, CM.CFG.growth, { popCurve: [[1990, 8.3e6], [1995, 9.0e6], [2000, 10.6e6], [2005, 12.6e6], [2010, 14.8e6], [2015, 15.7e6], [2020, 16.3e6], [2030, 16.9e6], [2050, 17.2e6], [2300, 17.5e6]], histEnd: 2020, jobsRatio: [[1990, 0.56], [2000, 0.55], [2010, 0.58], [2020, 0.6]] }),
       money: { code: 'CNY', unit: '元', wan: '万元', yi: '亿元', sym: '¥' },
       econBase: 1990,
@@ -361,6 +404,6 @@
         ],
       },
     },
-    cam: { cx: 63, cy: 80, zoom: 16 },
+    cam: { cx: 83, cy: 120, zoom: 16 },
   });
 })(window.CM);

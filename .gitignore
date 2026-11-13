@@ -22,3 +22,11 @@ node_modules/
 *.log
 *.tmp
 
+# OSM data pipeline (raw data not committed, same as szdata/)
+shdata/features.json
+shdata/strips_features.json
+shdata/strips.osm
+shdata/tiles/
+shdata/progress.json
+shdata/china-latest.osm.pbf
+
